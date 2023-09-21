@@ -1,6 +1,6 @@
 # News App
 * UIKit
-* [News API](newsapi.org) 
+* [News API](https://newsapi.org) 
 * Firebase
 * MVVM
 * UserDefaults
