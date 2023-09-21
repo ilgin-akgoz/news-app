@@ -14,9 +14,9 @@ final class ProfileViewController: UIViewController {
         setupUI()
     }
     
-    // temporary code, will be moved to view and view model files
     private func setupUI() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(didTapLogoutButton))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(didTapLogoutButton))
+        navigationItem.rightBarButtonItem?.tintColor = .systemPurple
     }
     
     @objc private func didTapLogoutButton() {

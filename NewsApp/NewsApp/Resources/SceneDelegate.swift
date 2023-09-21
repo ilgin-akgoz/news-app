@@ -26,8 +26,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     public func checkAuthentication() {
         if Auth.auth().currentUser == nil {
-            let nav = UINavigationController(rootViewController: LoginViewController())
-            window?.rootViewController = nav
+            let vc = PageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+            window?.rootViewController = vc
         } else {
             window?.rootViewController = TabBarController()
         }
