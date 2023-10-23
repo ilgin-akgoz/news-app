@@ -113,10 +113,10 @@ final class NewsCollectionViewCell: UICollectionViewCell {
         
         if bookmarkButton.isSelected {
             viewModel.saveBookmark(article)
-            delegate?.didTapBookmarkButton()
         } else {
             viewModel.removeBookmark(article)
-            delegate?.didTapBookmarkButton()
         }
+        
+        delegate?.didTapBookmarkButton()
     }
 }

@@ -16,6 +16,7 @@ final class NewsViewModel: NSObject {
     private let searchService: SearchServiceProtocol = SearchService()
     private let topHeadlinesService: TopHeadlinesServiceProtocol = TopHeadlinesService()
     weak var delegate: NewsViewModelDelegate?
+    let bookmarksViewModel = BookmarksViewModel()
     private var searchQuery: String = ""
     var articles: [Article] = []
     
@@ -76,25 +77,11 @@ final class NewsViewModel: NSObject {
     }
     
     func saveBookmark(_ article: Article) {
-        if !isArticleBookmarked(article) {
-            var bookmarks = UserDefaults.standard.array(forKey: "bookmarkedArticles") as? [Data] ?? []
-            if let encodedArticle = try? JSONEncoder().encode(article) {
-                bookmarks.append(encodedArticle)
-                UserDefaults.standard.set(bookmarks, forKey: "bookmarkedArticles")
-            }
+        var bookmarks = UserDefaults.standard.array(forKey: "bookmarkedArticles") as? [Data] ?? []
+        if let encodedArticle = try? JSONEncoder().encode(article) {
+            bookmarks.append(encodedArticle)
+            UserDefaults.standard.set(bookmarks, forKey: "bookmarkedArticles")
         }
-    }
-    
-    func isArticleBookmarked(_ article: Article) -> Bool {
-        if let bookmarksData = UserDefaults.standard.array(forKey: "bookmarkedArticles") as? [Data] {
-            for data in bookmarksData {
-                if let bookmarkedArticle = try? JSONDecoder().decode(Article.self, from: data),
-                   bookmarkedArticle.title == article.title {
-                    return true
-                }
-            }
-        }
-        return false
     }
 }
 
@@ -130,6 +117,8 @@ extension NewsViewModel: UICollectionViewDataSource, UICollectionViewDelegate, U
         ) as? NewsCollectionViewCell else {
             return UICollectionViewCell()
         }
+        
+        cell.delegate = bookmarksViewModel
         
         if articles.indices.contains(indexPath.row) {
             let article = articles[indexPath.row]

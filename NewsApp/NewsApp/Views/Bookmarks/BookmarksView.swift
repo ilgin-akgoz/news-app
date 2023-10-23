@@ -16,6 +16,8 @@ final class BookmarksView: UIView {
         translatesAutoresizingMaskIntoConstraints = false        
         addSubview(collectionView)
         
+        viewModel.delegate = self
+        
         setupConstraints()
         setUpCollectionView()
     }
@@ -58,6 +60,8 @@ final class BookmarksView: UIView {
 
 extension BookmarksView: BookmarksViewModelDelegate {
     func reloadDataCall() {
-        collectionView.reloadData()
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
     }
 }
